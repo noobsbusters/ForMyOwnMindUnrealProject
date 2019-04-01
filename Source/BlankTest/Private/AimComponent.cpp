@@ -28,6 +28,82 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+}
+
+void UAimComponent::SetTargetAimDirectionAndAngle(const float AimV, const float AimH)
+{
+
+	//celowanie prawo
+	if (AimH > 0)
+	{
+		TargetAimDirection = 0;
+		if (AimV > 0)
+		{
+			TargetAimAngle = 45;
+		}
+		else if (AimV < 0)
+		{
+			TargetAimAngle = -45;
+		}
+		else
+		{
+			TargetAimAngle = 0;
+		}
+	}
+	//celowanie lewo
+	else if(AimH < 0)
+	{
+		TargetAimDirection = -179.99f;
+		if (AimV > 0)
+		{
+			TargetAimAngle = 45;
+		}
+		else if (AimV < 0)
+		{
+			TargetAimAngle = -45;
+		}
+		else
+		{
+			TargetAimAngle = 0;
+		}
+	}
+	//celowanie default, ostatni klikniety kierunek
+	else
+	{
+		if (AimV > 0)
+		{
+			TargetAimAngle = 90;
+		}
+		else if (AimV < 0)
+		{
+			TargetAimAngle = -90;
+		}
+		else
+		{
+			TargetAimAngle = 0;
+		}
+	}
+}
+
+void UAimComponent::CalculateCurrentAimDirectionAndAngle(float DeltaSeconds, float & Aim_Direction, float & Aim_Angle)
+{
+
+
+	CurrentAimAngle = FMath::FInterpTo(CurrentAimAngle, TargetAimAngle, DeltaSeconds, 15);
+	CurrentAimDirection = FMath::FInterpTo(CurrentAimDirection, TargetAimDirection, DeltaSeconds, 15);
+
+	Aim_Direction = CurrentAimDirection;
+	Aim_Angle = CurrentAimAngle;
+
+	UE_LOG(LogTemp, Warning, TEXT("TickComponent %f, target %f"), CurrentAimDirection, TargetAimDirection);
+}
+
+void UAimComponent::UpdateCurrentAimDirection(float NewCurrentRotation)
+{
+
+	 CurrentAimDirection = NewCurrentRotation ;
+
+
+	 UE_LOG(LogTemp, Warning, TEXT("UpdateCurrentAimDirection %f"), CurrentAimDirection);
 }
 
