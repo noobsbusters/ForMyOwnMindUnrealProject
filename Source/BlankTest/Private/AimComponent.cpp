@@ -94,16 +94,11 @@ void UAimComponent::CalculateCurrentAimDirectionAndAngle(float DeltaSeconds, flo
 
 	Aim_Direction = CurrentAimDirection;
 	Aim_Angle = CurrentAimAngle;
-
-	UE_LOG(LogTemp, Warning, TEXT("TickComponent %f, target %f"), CurrentAimDirection, TargetAimDirection);
 }
 
 void UAimComponent::UpdateCurrentAimDirection(float NewCurrentRotation)
 {
 
 	 CurrentAimDirection = NewCurrentRotation ;
-
-
-	 UE_LOG(LogTemp, Warning, TEXT("UpdateCurrentAimDirection %f"), CurrentAimDirection);
 }
 
