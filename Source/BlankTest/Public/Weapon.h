@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 #include "Weapon.generated.h"
+
+class AProjectile;
 
 UCLASS()
 class BLANKTEST_API AWeapon : public AActor
@@ -17,6 +20,18 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Firing")
 	float RateOfFire = 100; // rounds/s
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Firing")
+	float MuzzleVelocity = 5000; // rounds/s
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> BulletBlueprint = nullptr;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void Fire();
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void SetWeaponMesh(UStaticMeshComponent * MeshToSet);
 	
 
 protected:
@@ -26,5 +41,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+
+	UStaticMeshComponent * WeaponMesh = nullptr;
 
 };
